@@ -21,6 +21,13 @@ module "ec2_module" {
   sg_value            = module.vpc_module.security_group_id
 
 }
+module "alb_module" {
+  source          = "./modules/alb"
+  region          = var.mod_region
+  subnet_id_value = module.vpc_module.public_subnet_id
+  sg_value        = module.vpc_module.security_group_id
+  vpc_id          = module.vpc_module.vpc_id
+}
 module "ecs_module" {
   source                     = "./modules/ecs"
   region                     = var.mod_region
@@ -33,5 +40,6 @@ module "ecs_module" {
   ecs_task_family_name_value = var.ecs_task_family_name
   ecs_service_name_value     = var.ecs_service_name
   ecs_container_name_value   = var.ecs_container_name
+  alb_arn_value              = module.alb_module.alb_arn
 
 }

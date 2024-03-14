@@ -19,8 +19,8 @@ output "elastic_IP" {
 }
 # ----
 
-# ECS Module Outputs
+# ALB Module Outputs
 output "load_balancer_endpoint" {
-  value = module.ecs_module.load_balancer_endpoint
+  value = module.alb_module.load_balancer_endpoint
 }
 #----

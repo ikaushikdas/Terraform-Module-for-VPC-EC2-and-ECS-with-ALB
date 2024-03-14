@@ -29,7 +29,7 @@ resource "aws_instance" "ec2_instance" {
       "sudo apt-get install -y python3-pip",  # Example package installation
       "cd /home/ubuntu",
       "sudo pip3 install flask",
-      "sudo python3 app.py",
+      "sudo python3 app.py &",
       ]
     }
 }

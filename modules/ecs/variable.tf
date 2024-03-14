@@ -28,3 +28,6 @@ variable "ecs_service_name_value" {
 variable "ecs_container_name_value" {
   default = "value from Module"
 }
+variable "alb_arn_value" {
+  default = "value from Module"
+}

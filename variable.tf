@@ -16,6 +16,9 @@ variable "mod_key_name" {
 variable "mod_key_path" {
   default = "~/.ssh/id_rsa.pub"
 }
+variable "vpc_name" {
+  default = "awsvpc"
+}
 #--- End of VPC----
 
 # For EC2 Module

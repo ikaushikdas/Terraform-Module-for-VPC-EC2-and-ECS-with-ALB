@@ -9,6 +9,7 @@ module "vpc_module" {
   key_name_value = var.mod_key_name
   key_path_value = var.mod_key_path
   region         = var.mod_region
+  vpc_name_value = var.vpc_name
 }
 module "ec2_module" {
   source              = "./modules/ec2"

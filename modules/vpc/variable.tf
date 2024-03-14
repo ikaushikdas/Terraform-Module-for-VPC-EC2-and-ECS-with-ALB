@@ -1,6 +1,9 @@
 variable "region" {
   default = "value from module"
 }
+variable "vpc_name_value" {
+  default = "value from Module"
+}
 variable "key_name_value" {
     default = "value from Module"
 }

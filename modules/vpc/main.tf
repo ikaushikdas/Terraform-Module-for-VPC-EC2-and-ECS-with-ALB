@@ -8,7 +8,7 @@ resource "aws_key_pair" "key_name" {
 resource "aws_vpc" "vpc" {
   cidr_block = var.cidr_value
   tags = {
-    Name = "awsvpc"
+    Name = var.vpc_name_value
   }
 }
 # Create public subnets
@@ -34,18 +34,6 @@ resource "aws_subnet" "private_sub1" {
   }
 }
 
-# resource "aws_subnet" "public_sub1" {
-#   vpc_id                  = aws_vpc.vpc.id
-#   cidr_block              = var.cidr_sub1_value
-#   availability_zone       = var.zone_value
-#   map_public_ip_on_launch = true
-# }
-# resource "aws_subnet" "private_sub1" {
-#   vpc_id                  = aws_vpc.vpc.id
-#   cidr_block              = var.cidr_sub2_value
-#   availability_zone       = var.zone2_value
-#   map_public_ip_on_launch = true
-# }
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 }
@@ -56,13 +44,13 @@ resource "aws_route_table" "pubRT" {
     gateway_id = aws_internet_gateway.igw.id
   }
   tags = {
-    Name = "PublicRT"
+    Name = "${var.vpc_name_value}-PublicRT"
   }
 }
 resource "aws_route_table" "privRT" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-    Name = "PrivateRT"
+    Name = "${var.vpc_name_value}-PrivateRT"
   }
 }
 resource "aws_route_table_association" "rta1" {
@@ -75,6 +63,31 @@ resource "aws_route_table_association" "rta2" {
   subnet_id      = element(aws_subnet.private_sub1[*].id, count.index)
   route_table_id = aws_route_table.privRT.id
 }
+
+# Create NAT Gateway
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id     = aws_subnet.public_sub1[0].id # Use the first public subnet
+  tags = {
+    Name : "${var.vpc_name_value}-natgw"
+  }
+}
+
+# Create EIP for NAT Gateway
+resource "aws_eip" "nat_eip" {
+  tags = {
+    Name : "${var.vpc_name_value}-eip"
+  }
+}
+
+# Create Route for Private Subnets to use NAT Gateway
+resource "aws_route" "private_nat_route" {
+  route_table_id         = aws_route_table.privRT.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.nat.id
+}
+
+
 resource "aws_security_group" "webSg" {
   name = "web"
   vpc_id = aws_vpc.vpc.id
@@ -99,6 +112,6 @@ resource "aws_security_group" "webSg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "websg"
+    Name = "${var.vpc_name_value}-websg"
   }
 }

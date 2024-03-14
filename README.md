@@ -62,6 +62,9 @@ The ECS module provisions ECS clusters and associated resources, including an Ap
 - `ecs_service_name_value`: Name of the ECS service.
 - `ecs_container_name_value`: Name of the ECS container.
 
+#### Outputs
+- `load_balancer_endpoint`: Endpoint of the Application Load Balancer.
+
 ## Usage
 
 1. Clone this repository to your local machine:

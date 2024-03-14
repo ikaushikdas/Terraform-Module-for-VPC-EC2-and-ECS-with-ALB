@@ -3,6 +3,12 @@ variable "mod_region" {
   default = "ap-south-1"
 }
 
+# For s3 Module
+variable "bucket_name" {
+  default = "terraform-ui-object-storage"
+}
+#--- End of s3----
+
 # For VPC Module
 variable "mod_zone" {
   default = ["ap-south-1a", "ap-south-1b"]

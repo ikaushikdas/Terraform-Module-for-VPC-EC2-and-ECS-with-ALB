@@ -10,7 +10,28 @@ Before you begin, ensure you have the following:
 - AWS credentials configured on your machine or environment.
 - Access to an AWS account.
 
+## Backend
+
+Configure Terraform backend to use the S3 bucket for state management
+
+## state locking
+
+Optional: Use DynamoDB for state locking
+
 ## Modules
+
+### S3 Module
+
+The S3 module provisions an S3 bucket with customizable configurations.
+
+#### Inputs
+
+- `region`: AWS region for the S3 bucket.
+- `bucket_name_value`: Name of the S3 bucket.
+
+#### Outputs
+
+- `bucket name` : To print the bucket name
 
 ### VPC Module
 

@@ -1,7 +1,20 @@
 provider "aws" {
   region = var.mod_region
 }
-
+# Configure Terraform backend to use the S3 bucket
+terraform {
+  backend "s3" {
+    bucket         = "bucket_name"
+    key            = "terraform.tfstate"
+    region         = "ap-south-1"      # Update with the same region as your S3 bucket
+    #dynamodb_table = "terraform_locks" # Optional: Use DynamoDB for state locking
+  }
+}
+module "s3_module" {
+  source            = "./modules/s3"
+  region            = var.mod_region
+  bucket_name_value = var.bucket_name
+}
 module "vpc_module" {
   source         = "./modules/vpc"
   cidr_value     = var.mod_cidr

@@ -45,6 +45,23 @@ The EC2 module provisions EC2 instances in the VPC created by the VPC module.
 - `key_name_value`: Name of the SSH key pair to be used.
 - `sg_value`: ID of the security group to associate with the EC2 instances.
 
+#### Outputs
+- `Public Ip`: Public Ip of the instance.
+
+### ALB Module
+
+The ALB module provisions an Application Load Balancer (ALB) in the VPC.
+
+#### Inputs
+
+- `region`: AWS region for the ALB.
+- `subnet_id_value`: ID of the subnet where the ALB will be deployed.
+- `sg_value`: ID of the security group to associate with the ALB.
+- `vpc_id`: ID of the VPC.
+
+#### Outputs
+- `load_balancer_endpoint`: Endpoint of the Application Load Balancer.
+
 ### ECS Module
 
 The ECS module provisions ECS clusters and associated resources, including an Application Load Balancer (ALB).
@@ -62,8 +79,6 @@ The ECS module provisions ECS clusters and associated resources, including an Ap
 - `ecs_service_name_value`: Name of the ECS service.
 - `ecs_container_name_value`: Name of the ECS container.
 
-#### Outputs
-- `load_balancer_endpoint`: Endpoint of the Application Load Balancer.
 
 ## Usage
 

@@ -107,6 +107,7 @@ The ECS module provisions ECS clusters and associated resources, including an Ap
 
    ```bash
    git clone https://github.com/ikaushikdas/Terraform-Module-for-VPC-EC2-and-ECS-with-ALB.git
+   Update the root variables as per your requirements!
    terraform init
    terraform plan
    terraform apply -auto-approve
